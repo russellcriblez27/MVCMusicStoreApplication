@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Test";
+}
+
+<h2>Test</h2>
+<p> Albums</p>
+<div>
+    @Html.TextBox("TextBox1", "Hello")
+</div>
+<div>
+    @Html.RadioButton("Radio1", "Red")
+    @Html.RadioButton("Radio1", "Blue")
+    @Html.RadioButton("Radio1", "Green")
+</div>
+<div>
+    @Html.Label("Label")
+</div>
+<div>
+    @Html.CheckBox("Checkbox", true) 
+</div>
+<div>
+    @Html.DropDownList("AlbumsByName")
+    @Html.DropDownList("AlbumsByArtist")
+    @Html.DropDownList("AlbumsByGenre")
+
+</div>

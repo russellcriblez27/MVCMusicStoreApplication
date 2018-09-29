@@ -49,7 +49,7 @@ namespace MVCMusicStoreApplication.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AlbumId,GenreId,ArtistId,Title,Price,AlbumArtUrl")] Album album)
+        public ActionResult Create([Bind(Include = "AlbumId,GenreId,ArtistId,Title,Price,AlbumArtUrl,InStock,CountryOfOrigin")] Album album)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace MVCMusicStoreApplication.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AlbumId,GenreId,ArtistId,Title,Price,AlbumArtUrl")] Album album)
+        public ActionResult Edit([Bind(Include = "AlbumId,GenreId,ArtistId,Title,Price,AlbumArtUrl,InStock,CountryOfOrigin")] Album album)
         {
             if (ModelState.IsValid)
             {
@@ -132,5 +132,21 @@ namespace MVCMusicStoreApplication.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult Test()
+        {
+            var albums = db.Albums;
+            //LINQ extensions
+            var albumsbyname = albums.Where(x => x.Title == "Stormbringer");
+
+            var albumsbyartist = albums.Where(x => x.Artist.Name == "Chic");
+
+            var albumsbygenre = albums.Where(x=>x.Genre.Name == "Classical").OrderByDescending(x=>x.Title);
+            ViewBag.AlbumsByName = new SelectList(albumsbyname, "AlbumId", "Title", albumsbyname.First().AlbumId);
+            ViewBag.AlbumsByArtist = new SelectList(albumsbyartist, "ArtistId", "Title", albumsbyartist.First().ArtistId);
+            ViewBag.AlbumsByGenre = new SelectList(albumsbygenre, "GenreId", "Title", albumsbygenre.First().GenreId);
+            return View();
+        }
+
     }
 }
